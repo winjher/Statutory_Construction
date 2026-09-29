@@ -1,100 +1,510 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Statutory Construction — Case Flashcards</title><style>
-:root{--primary:#22406b;--accent:#8e2f4a;--gold:#c9932b;--green:#1e7a46;--light:#f5f6f8;--shadow:0 4px 20px rgba(0,0,0,.12);--radius:12px}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',Arial,sans-serif;background:var(--light);color:#222}
-header{background:linear-gradient(135deg,var(--primary),#132a48);color:#fff;padding:24px 32px;text-align:center}
-header h1{font-size:1.9rem;margin-bottom:6px}header p{opacity:.85;font-size:.92rem}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Statutory Construction — Case Flashcards</title>
+
+<style>
+
+:root{--primary:#1a3a5c;--accent:#c0392b;--gold:#d4a017;--light:#f4f6f9;--shadow:0 4px 20px rgba(0,0,0,.12);--radius:12px}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--light);color:#222}
+
+header{background:linear-gradient(135deg,var(--primary),#0d2845);color:#fff;padding:24px 32px;text-align:center}
+
+header h1{font-size:1.9rem;letter-spacing:.5px;margin-bottom:6px}
+
+header p{opacity:.85;font-size:.92rem}
+
 .controls{background:#fff;padding:14px 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:2px solid #e3e3e3;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+
 .search-box{flex:1;min-width:220px;padding:10px 14px;border:2px solid #ddd;border-radius:8px;font-size:.94rem}
+
 .search-box:focus,select:focus{outline:none;border-color:var(--primary)}
+
 select{padding:10px 12px;border:2px solid #ddd;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer}
+
 button{padding:10px 16px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer}
+
 button.alt{background:var(--accent)}button:hover{opacity:.9}
-.stats{margin-left:auto;font-size:.9rem;color:#666}.stats b{color:var(--primary)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;padding:24px;max-width:1650px;margin:0 auto}
-.flashcard{perspective:1400px;height:380px;cursor:pointer}
+
+button:disabled{opacity:.5;cursor:not-allowed}
+
+.stats{margin-left:auto;font-size:.9rem;color:#666;white-space:nowrap}.stats b{color:var(--primary)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px;padding:24px;max-width:1650px;margin:0 auto}
+
+.flashcard{perspective:1400px;height:340px;cursor:pointer}
+
 .inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+
 .flashcard.flipped .inner{transform:rotateY(180deg)}
+
 .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;background:#fff;display:flex;flex-direction:column;overflow:hidden}
-.front{border-top:6px solid var(--gold);justify-content:center;text-align:center;gap:13px}
-.num{position:absolute;top:10px;left:14px;font-size:.75rem;font-weight:800;color:#bbb}
-.front h2{font-size:1.15rem;color:var(--primary);line-height:1.35}.cite{font-size:.85rem;color:#555;font-style:italic}
+
+.front{border-top:6px solid var(--gold);justify-content:center;text-align:center;gap:14px}
+
+.front h2{font-size:1.16rem;color:var(--primary);line-height:1.35}
+
+.cite{font-size:.86rem;color:#555;font-style:italic}
+
 .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-.chip{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;background:#eef2f8;color:var(--primary);border:1px solid #d6dfec}
-.chip.art{background:var(--gold);color:#332300;border-color:#a87c14}.chip.topic{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+.chip{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;background:#eef3f9;color:var(--primary);border:1px solid #d6e2ef}
+
+.chip.art{background:var(--gold);color:#3a2b00;border-color:#c08f00}
+
+.chip.topic{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+.pon{font-size:.78rem;color:#888}
+
 .hint{font-size:.72rem;color:#aaa;margin-top:auto}
-.back{transform:rotateY(180deg);overflow-y:auto;text-align:left;font-size:.845rem;line-height:1.5;border-top:6px solid var(--accent)}
+
+.back{transform:rotateY(180deg);border-top:6px solid var(--accent);overflow-y:auto;text-align:left;font-size:.85rem;line-height:1.5}
+
 .back h3{font-size:.95rem;color:var(--primary);margin-bottom:6px}
-.lbl{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.5px;color:#fff;background:var(--accent);padding:2px 8px;border-radius:4px;margin:10px 0 4px}
-.lbl.d{background:var(--primary)}.lbl.r{background:var(--green)}.lbl.b{background:#4a3b8c}
-.alac{background:#f7f4fb;border-left:3px solid #4a3b8c;padding:8px 10px;border-radius:0 6px 6px 0;margin-top:4px}
-.alac b{color:#4a3b8c}
+
+.back .lbl{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.5px;color:#fff;background:var(--accent);padding:2px 8px;border-radius:4px;margin:10px 0 4px}
+
+.back .lbl.d{background:var(--primary)}.back .lbl.r{background:#1e7a46}
+
+.back .lbl.ans{background:#6a3fa0}.back .lbl.law{background:var(--primary)}.back .lbl.app{background:var(--gold);color:#3a2b00}.back .lbl.con{background:#1e7a46}
+
+.alac-q{font-size:.83rem;font-style:italic;color:#444;margin-bottom:6px;padding-bottom:6px;border-bottom:1px dashed #ddd}
+
 footer{text-align:center;padding:22px;color:#777;font-size:.82rem}
+
 @media print{.controls,.hint,footer{display:none}.flashcard{height:auto;page-break-inside:avoid}.inner{transform:none!important}.face{position:static;backface-visibility:visible;transform:none!important;box-shadow:none;border:1px solid #ccc;margin-bottom:8px}}
+
+
+/* ---- Login gate ---- */
+
+#loginOverlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--primary),#0d2845);
+
+display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+
+#loginBox{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:32px 28px;
+
+width:100%;max-width:380px}
+
+#loginBox h1{font-size:1.3rem;color:var(--primary);margin-bottom:4px;text-align:center}
+
+#loginBox p.sub{font-size:.85rem;color:#777;text-align:center;margin-bottom:20px}
+
+#loginBox label{font-size:.8rem;font-weight:700;color:#444;display:block;margin:12px 0 4px}
+
+#loginBox input{width:100%;padding:11px 12px;border:2px solid #ddd;border-radius:8px;font-size:.95rem}
+
+#loginBox input:focus{outline:none;border-color:var(--primary)}
+
+#loginBtn{width:100%;margin-top:18px;padding:12px;font-size:.95rem}
+
+#loginMsg{margin-top:14px;font-size:.85rem;line-height:1.5;padding:10px 12px;border-radius:8px;display:none}
+
+#loginMsg.error{display:block;background:#fdecea;color:var(--accent)}
+
+#loginMsg.blocked{display:block;background:#fff6e0;color:#7a5600}
+
+#payBox{margin-top:14px;display:none}
+
+#payBox input{margin-top:6px}
+
+#payBox button{width:100%;margin-top:10px;background:var(--gold);color:#3a2b00}
+
+#loadingMsg{font-size:.85rem;color:#888;text-align:center;margin-top:10px;display:none}
+
+.app-hidden{display:none}
+
 </style></head><body>
+
+
+<div id="loginOverlay">
+
+<div id="loginBox">
+
+<h1>Statutory Construction</h1>
+
+<p class="sub">Case Flashcards &middot; enter your student ID and password</p>
+
+<label for="loginId">Student ID</label>
+
+<input id="loginId" placeholder="e.g. STU001" autocomplete="username">
+
+<label for="loginPass">Password</label>
+
+<input id="loginPass" type="password" placeholder="Password" autocomplete="current-password">
+
+<button id="loginBtn" onclick="doLogin()">Log in</button>
+
+<div id="loadingMsg">Checking&hellip;</div>
+
+<div id="loginMsg"></div>
+
+<div id="payBox">
+
+<label for="gcashRef">GCash reference number</label>
+
+<input id="gcashRef" placeholder="Reference number">
+
+<button onclick="doSubmitPayment()">Submit payment reference</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="app" class="app-hidden">
+
 <header><h1>Statutory Construction — Case Flashcards</h1>
-<p><span id="total">…</span> cases · each card tagged <b>Canon / Legal Basis | Topic</b> · back includes the ALAC Bar Q&amp;A · click to flip</p></header>
+
+<p>Supreme Court cases · each card tagged <b>Topic</b> · click a card to flip · switch to <b>Bar Q&amp;A (ALAC)</b> view in the toolbar</p></header>
+
 <div class="controls">
-<input class="search-box" id="q" placeholder="Search case, maxim, doctrine, topic…">
-<select id="topic"><option value="">All topics</option></select>
+
+<input class="search-box" id="q" placeholder="Search case, doctrine, Latin maxim, topic…">
+
+<select id="topic">
+<option value="">All topics</option>
+<option value="Basic Principles & Principles of Interpretation">Basic Principles &amp; Principles of Interpretation</option>
+<option value="Verba Legis & Plain Meaning Rule">Verba Legis &amp; Plain Meaning Rule</option>
+<option value="Legislative Intent & Ratio Legis">Legislative Intent &amp; Ratio Legis</option>
+<option value="Intrinsic Aids to Construction">Intrinsic Aids to Construction</option>
+<option value="Extrinsic Aids to Construction">Extrinsic Aids to Construction</option>
+<option value="Strict & Liberal Construction">Strict &amp; Liberal Construction</option>
+<option value="Mandatory & Directory Statutes">Mandatory &amp; Directory Statutes</option>
+<option value="Prospective & Retrospective Statutes">Prospective &amp; Retrospective Statutes</option>
+<option value="Repeal & Amendment of Statutes">Repeal &amp; Amendment of Statutes</option>
+<option value="Latin Maxims in Construction">Latin Maxims in Construction</option>
+<option value="Executive & Administrative Interpretation">Executive &amp; Administrative Interpretation</option>
+<option value="Constitutional & Statutory Harmonization">Constitutional &amp; Statutory Harmonization</option>
+</select>
+
+<select id="mode"><option value="std">Standard (Facts/Issue/Ruling/Doctrine)</option><option value="alac">Bar Q&amp;A (ALAC method)</option></select>
+
 <button onclick="shuffleCards()">Shuffle</button>
+
 <button class="alt" onclick="flipAll()">Flip all</button>
+
 <button onclick="window.print()">Print</button>
-<div class="stats">Showing <b id="cnt">0</b> of <span id="tot2">…</span></div></div>
+
+<div class="stats"><span id="attemptsInfo"></span>&nbsp; Showing <b id="cnt">0</b> of <b id="total">0</b></div>
+
+</div>
+
 <div class="grid" id="grid"></div>
-<footer>Source: your StatCon case-citation digest · study aid only — always read the full decision.</footer>
+
+<footer>Digest source: Statutory Construction case digests · study aid only — always read the full text of the decision.</footer>
+
+</div>
+
+
 <script>
-// ====== CONFIG ======
-const API_URL = 'https://script.google.com/macros/s/AKfycbwwD83TeJ-SyqllNBsTQZxyX393mfuUIBhEiq-E_LAqFxSvM1OKaVgEhvXIjk6GkdfxWA/exec'; // ends with /exec
-// ====================
-let DATA=[],order=[];const grid=document.getElementById('grid');
-async function load(key){
-  const url=API_URL+(key?('?key='+encodeURIComponent(key)):'');
-  const res=await fetch(url);
-  const j=await res.json();
-  if(!j.ok)throw new Error(j.error||'load failed');
-  return j.cases;
-}
-async function init(){
-  grid.innerHTML='<p style="padding:40px;color:#777">Loading cases…</p>';
-  let key=sessionStorage.getItem('sc_key')||'';
-  for(let tries=0;tries<3;tries++){
-    try{
-      DATA=await load(key);
-      if(key)sessionStorage.setItem('sc_key',key);
-      order=DATA.map((_,i)=>i);
-      document.getElementById('total').textContent=document.getElementById('tot2').textContent=DATA.length;
-      const sel=document.getElementById('topic');
-      [...new Set(DATA.map(c=>c.t))].sort().forEach(t=>{const o=document.createElement('option');o.value=o.textContent=t;sel.appendChild(o);});
-      render();return;
-    }catch(e){
-      if(String(e.message)==='unauthorized'){sessionStorage.removeItem('sc_key');key=prompt('Enter passcode:')||'';if(!key)break;}
-      else{break;}
-    }
-  }
-  grid.innerHTML='<p style="padding:40px;color:#a00">Could not load the cases. Check API_URL / deployment access, or the passcode.</p>';
+
+// ===== Wire this up after deploying your backend endpoint =====
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwiFEFEZzj3gLVlI4a92y1KtRKw_M4fvyGt5wgnJMhfRv2NYKVuwoejMJn9h0tfokgSJg/exec';
+
+
+let DATA = [];
+
+let currentId = null;
+
+
+function setLoading(isLoading){
+
+document.getElementById('loadingMsg').style.display = isLoading ? 'block' : 'none';
+
+document.getElementById('loginBtn').disabled = isLoading;
+
 }
 
-const esc=s=>(s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-function card(c){return `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="inner">
-<div class="face front"><div class="num">#${c.no}</div>
-<div class="chips"><span class="chip art">${esc(c.a)}</span><span class="chip topic">${esc(c.t)}</span></div>
-<h2>${esc(c.n)}</h2><div class="cite">${esc(c.c)}</div>
-<div class="hint">click to reveal doctrine, ruling &amp; Bar Q&amp;A</div></div>
-<div class="face back"><h3>${esc(c.n)} <span style="font-weight:400;font-size:.8rem;color:#666">(${esc(c.c)})</span></h3>
+function showLoginMsg(text, cls){
+
+const el = document.getElementById('loginMsg');
+
+el.textContent = text;
+
+el.className = cls || 'error';
+
+}
+
+function clearLoginMsg(){
+
+const el = document.getElementById('loginMsg');
+
+el.textContent = '';
+
+el.className = '';
+
+document.getElementById('payBox').style.display = 'none';
+
+}
+
+
+async function callApi(params){
+
+const body = new URLSearchParams(params);
+
+const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body });
+
+return res.json();
+
+}
+
+
+async function doLogin(){
+
+clearLoginMsg();
+
+const id = document.getElementById('loginId').value.trim();
+
+const password = document.getElementById('loginPass').value;
+
+if(!id || !password){ showLoginMsg('Please enter both your ID and password.'); return; }
+
+
+setLoading(true);
+
+try{
+
+const result = await callApi({ action: 'login', id, password });
+
+setLoading(false);
+
+
+if(result.blocked){
+
+currentId = id;
+
+showLoginMsg(result.message, 'blocked');
+
+document.getElementById('payBox').style.display = 'block';
+
+return;
+
+}
+
+if(!result.ok){
+
+showLoginMsg(result.error || 'Login failed.');
+
+return;
+
+}
+
+
+// Success — data is delivered only now, as part of the login response.
+
+DATA = result.cards || [];
+
+currentId = id;
+
+document.getElementById('loginOverlay').style.display = 'none';
+
+document.getElementById('app').classList.remove('app-hidden');
+
+document.getElementById('attemptsInfo').textContent =
+
+'Attempt ' + result.attempts + ' of ' + result.limit + ' (' + result.status + ')';
+
+document.getElementById('total').textContent = DATA.length;
+
+initApp();
+
+}catch(err){
+
+setLoading(false);
+
+showLoginMsg('Could not reach the server. Check your connection and try again.');
+
+}
+
+}
+
+
+async function doSubmitPayment(){
+
+const ref = document.getElementById('gcashRef').value.trim();
+
+if(!ref){ showLoginMsg('Enter the GCash reference number first.', 'blocked'); return; }
+
+if(!currentId){ return; }
+
+setLoading(true);
+
+try{
+
+const result = await callApi({ action: 'submitPayment', id: currentId, ref });
+
+setLoading(false);
+
+showLoginMsg(result.message || 'Submitted. Your teacher will verify and upgrade your account.', 'blocked');
+
+}catch(err){
+
+setLoading(false);
+
+showLoginMsg('Could not reach the server. Try again.', 'blocked');
+
+}
+
+}
+
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+document.getElementById('loginId').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+
+
+let order = DATA.map((_,i)=>i);
+
+const grid = document.getElementById('grid');
+
+const esc = s => (s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+
+// Extract a short "Answer" (Yes/No/etc.) from the start of the ruling text.
+
+function extractAnswer(r){
+
+if(!r) return 'See ruling.';
+
+const m = r.match(/^(Yes|No)\.?\s*/i);
+
+if(m) return m[1].charAt(0).toUpperCase()+m[1].slice(1).toLowerCase()+'.';
+
+const firstSentence = r.split(/(?<=\.)\s/)[0];
+
+return firstSentence.length<140 ? firstSentence : firstSentence.slice(0,140)+'…';
+
+}
+
+// Strip a leading Yes./No. from ruling text so it isn't duplicated in the Conclusion.
+
+function stripAnswer(r){
+
+return (r||'').replace(/^(Yes|No)\.?\s*/i,'');
+
+}
+
+function buildBack(c,i,mode){
+
+if(mode==='alac'){
+
+const answer = extractAnswer(c.r);
+
+const conclusion = stripAnswer(c.r) || c.d;
+
+return `<h3>${esc(c.n)} <span style="font-weight:400;font-size:.8rem;color:#666">(${esc(c.c)})</span></h3>
+
 <div><span class="chip art">${esc(c.a)}</span> <span class="chip topic">${esc(c.t)}</span></div>
+
+<div class="alac-q">${esc(c.i)}</div>
+
+<div class="lbl ans">ANSWER</div><div>${esc(answer)}</div>
+
+<div class="lbl law">LAW</div><div>${esc(c.d)}</div>
+
+${c.f?`<div class="lbl app">APPLICATION</div><div>${esc(c.f)}</div>`:''}
+
+<div class="lbl con">CONCLUSION</div><div>${esc(conclusion)}</div>`;
+
+}
+
+return `<h3>${esc(c.n)} <span style="font-weight:400;font-size:.8rem;color:#666">(${esc(c.c)})</span></h3>
+
+<div><span class="chip art">${esc(c.a)}</span> <span class="chip topic">${esc(c.t)}</span></div>
+
 <div class="lbl d">DOCTRINE</div><div>${esc(c.d)}</div>
-<div class="lbl">FACTS</div><div>${esc(c.f)}</div>
-<div class="lbl">ISSUE</div><div>${esc(c.i)}</div>
-<div class="lbl r">RULING</div><div>${esc(c.r)}</div>
-<div class="lbl b">BAR Q&amp;A — ALAC</div><div>${esc(c.q)}</div>
-<div class="alac"><b>Answer:</b> ${esc(c.A)}<br><b>Legal Basis:</b> ${esc(c.lb)}<br><b>Application:</b> ${esc(c.ap)}<br><b>Conclusion:</b> ${esc(c.cn)}</div>
-</div></div></div>`}
-function render(){const q=document.getElementById('q').value.toLowerCase(),t=document.getElementById('topic').value;let h='',n=0;
-order.forEach(i=>{const c=DATA[i];const b=(c.n+' '+c.c+' '+c.a+' '+c.t+' '+c.d+' '+c.i+' '+c.r+' '+c.q+' '+c.lb).toLowerCase();
-if(q&&!b.includes(q))return;if(t&&c.t!==t)return;h+=card(c);n++;});
-grid.innerHTML=h||'<p style="padding:40px;color:#777">No cards match your filter.</p>';document.getElementById('cnt').textContent=n;}
+
+${c.f?`<div class="lbl">FACTS</div><div>${esc(c.f)}</div>`:''}
+
+${c.i?`<div class="lbl">ISSUE</div><div>${esc(c.i)}</div>`:''}
+
+${c.r?`<div class="lbl r">RULING</div><div>${esc(c.r)}</div>`:''}`;
+
+}
+
+function card(c,i){
+
+const mode = document.getElementById('mode').value;
+
+return `<div class="flashcard" data-i="${i}" onclick="this.classList.toggle('flipped')">
+
+<div class="inner">
+
+<div class="face front">
+
+<div class="chips"><span class="chip art">${esc(c.a)}</span><span class="chip topic">${esc(c.t)}</span></div>
+
+<h2>${esc(c.n)}</h2><div class="cite">${esc(c.c)}</div>
+
+<div class="chips"><span class="chip">${esc(c.k)}</span></div>
+
+<div class="pon">Ponente: ${esc(c.p)}</div>
+
+<div class="hint">click to reveal ${mode==='alac'?'Bar Q&amp;A (ALAC)':'doctrine &amp; ruling'}</div>
+
+</div>
+
+<div class="face back">
+
+${buildBack(c,i,mode)}
+
+</div>
+
+</div></div>`;
+
+}
+
+function render(){
+
+const q=document.getElementById('q').value.toLowerCase();
+
+const t=document.getElementById('topic').value;
+
+let html='',n=0;
+
+order.forEach(i=>{const c=DATA[i];
+
+const blob=(c.n+' '+c.c+' '+c.a+' '+c.t+' '+c.k+' '+c.d+' '+c.i+' '+c.r+' '+c.p).toLowerCase();
+
+if(q&&!blob.includes(q))return; if(t&&c.t!==t)return; html+=card(c,i); n++;});
+
+grid.innerHTML=html||'<p style="padding:40px;color:#777">No cards match your filter.</p>';
+
+document.getElementById('cnt').textContent=n;
+
+}
+
 function shuffleCards(){for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}render();}
+
 function flipAll(){const cs=document.querySelectorAll('.flashcard');const any=[...cs].some(c=>!c.classList.contains('flipped'));cs.forEach(c=>c.classList.toggle('flipped',any));}
-document.getElementById('q').addEventListener('input',render);document.getElementById('topic').addEventListener('change',render);init();
-</script></body></html>
+
+document.getElementById('q').addEventListener('input',render);
+
+document.getElementById('topic').addEventListener('change',render);
+
+document.getElementById('mode').addEventListener('change',render);
+
+// render() is called from initApp() once cards have loaded
+
+
+function initApp(){
+
+order = DATA.map((_,i)=>i);
+
+render();
+
+}
+
+</script>
+</body>
+</html>
