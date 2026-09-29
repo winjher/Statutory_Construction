@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statutory Construction — Case Flashcards</title><style>
+:root{--primary:#22406b;--accent:#8e2f4a;--gold:#c9932b;--green:#1e7a46;--light:#f5f6f8;--shadow:0 4px 20px rgba(0,0,0,.12);--radius:12px}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',Arial,sans-serif;background:var(--light);color:#222}
+header{background:linear-gradient(135deg,var(--primary),#132a48);color:#fff;padding:24px 32px;text-align:center}
+header h1{font-size:1.9rem;margin-bottom:6px}header p{opacity:.85;font-size:.92rem}
+.controls{background:#fff;padding:14px 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:2px solid #e3e3e3;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.search-box{flex:1;min-width:220px;padding:10px 14px;border:2px solid #ddd;border-radius:8px;font-size:.94rem}
+.search-box:focus,select:focus{outline:none;border-color:var(--primary)}
+select{padding:10px 12px;border:2px solid #ddd;border-radius:8px;background:#fff;font-size:.9rem;cursor:pointer}
+button{padding:10px 16px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer}
+button.alt{background:var(--accent)}button:hover{opacity:.9}
+.stats{margin-left:auto;font-size:.9rem;color:#666}.stats b{color:var(--primary)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;padding:24px;max-width:1650px;margin:0 auto}
+.flashcard{perspective:1400px;height:380px;cursor:pointer}
+.inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.front{border-top:6px solid var(--gold);justify-content:center;text-align:center;gap:13px}
+.num{position:absolute;top:10px;left:14px;font-size:.75rem;font-weight:800;color:#bbb}
+.front h2{font-size:1.15rem;color:var(--primary);line-height:1.35}.cite{font-size:.85rem;color:#555;font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chip{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;background:#eef2f8;color:var(--primary);border:1px solid #d6dfec}
+.chip.art{background:var(--gold);color:#332300;border-color:#a87c14}.chip.topic{background:var(--primary);color:#fff;border-color:var(--primary)}
+.hint{font-size:.72rem;color:#aaa;margin-top:auto}
+.back{transform:rotateY(180deg);overflow-y:auto;text-align:left;font-size:.845rem;line-height:1.5;border-top:6px solid var(--accent)}
+.back h3{font-size:.95rem;color:var(--primary);margin-bottom:6px}
+.lbl{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.5px;color:#fff;background:var(--accent);padding:2px 8px;border-radius:4px;margin:10px 0 4px}
+.lbl.d{background:var(--primary)}.lbl.r{background:var(--green)}.lbl.b{background:#4a3b8c}
+.alac{background:#f7f4fb;border-left:3px solid #4a3b8c;padding:8px 10px;border-radius:0 6px 6px 0;margin-top:4px}
+.alac b{color:#4a3b8c}
+footer{text-align:center;padding:22px;color:#777;font-size:.82rem}
+@media print{.controls,.hint,footer{display:none}.flashcard{height:auto;page-break-inside:avoid}.inner{transform:none!important}.face{position:static;backface-visibility:visible;transform:none!important;box-shadow:none;border:1px solid #ccc;margin-bottom:8px}}
+</style></head><body>
+<header><h1>Statutory Construction — Case Flashcards</h1>
+<p><span id="total">…</span> cases · each card tagged <b>Canon / Legal Basis | Topic</b> · back includes the ALAC Bar Q&amp;A · click to flip</p></header>
+<div class="controls">
+<input class="search-box" id="q" placeholder="Search case, maxim, doctrine, topic…">
+<select id="topic"><option value="">All topics</option></select>
+<button onclick="shuffleCards()">Shuffle</button>
+<button class="alt" onclick="flipAll()">Flip all</button>
+<button onclick="window.print()">Print</button>
+<div class="stats">Showing <b id="cnt">0</b> of <span id="tot2">…</span></div></div>
+<div class="grid" id="grid"></div>
+<footer>Source: your StatCon case-citation digest · study aid only — always read the full decision.</footer>
+<script>
+// ====== CONFIG ======
+const API_URL = 'https://script.google.com/macros/s/AKfycbwwD83TeJ-SyqllNBsTQZxyX393mfuUIBhEiq-E_LAqFxSvM1OKaVgEhvXIjk6GkdfxWA/exec'; // ends with /exec
+// ====================
+let DATA=[],order=[];const grid=document.getElementById('grid');
+async function load(key){
+  const url=API_URL+(key?('?key='+encodeURIComponent(key)):'');
+  const res=await fetch(url);
+  const j=await res.json();
+  if(!j.ok)throw new Error(j.error||'load failed');
+  return j.cases;
+}
+async function init(){
+  grid.innerHTML='<p style="padding:40px;color:#777">Loading cases…</p>';
+  let key=sessionStorage.getItem('sc_key')||'';
+  for(let tries=0;tries<3;tries++){
+    try{
+      DATA=await load(key);
+      if(key)sessionStorage.setItem('sc_key',key);
+      order=DATA.map((_,i)=>i);
+      document.getElementById('total').textContent=document.getElementById('tot2').textContent=DATA.length;
+      const sel=document.getElementById('topic');
+      [...new Set(DATA.map(c=>c.t))].sort().forEach(t=>{const o=document.createElement('option');o.value=o.textContent=t;sel.appendChild(o);});
+      render();return;
+    }catch(e){
+      if(String(e.message)==='unauthorized'){sessionStorage.removeItem('sc_key');key=prompt('Enter passcode:')||'';if(!key)break;}
+      else{break;}
+    }
+  }
+  grid.innerHTML='<p style="padding:40px;color:#a00">Could not load the cases. Check API_URL / deployment access, or the passcode.</p>';
+}
+
+const esc=s=>(s||'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+function card(c){return `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="inner">
+<div class="face front"><div class="num">#${c.no}</div>
+<div class="chips"><span class="chip art">${esc(c.a)}</span><span class="chip topic">${esc(c.t)}</span></div>
+<h2>${esc(c.n)}</h2><div class="cite">${esc(c.c)}</div>
+<div class="hint">click to reveal doctrine, ruling &amp; Bar Q&amp;A</div></div>
+<div class="face back"><h3>${esc(c.n)} <span style="font-weight:400;font-size:.8rem;color:#666">(${esc(c.c)})</span></h3>
+<div><span class="chip art">${esc(c.a)}</span> <span class="chip topic">${esc(c.t)}</span></div>
+<div class="lbl d">DOCTRINE</div><div>${esc(c.d)}</div>
+<div class="lbl">FACTS</div><div>${esc(c.f)}</div>
+<div class="lbl">ISSUE</div><div>${esc(c.i)}</div>
+<div class="lbl r">RULING</div><div>${esc(c.r)}</div>
+<div class="lbl b">BAR Q&amp;A — ALAC</div><div>${esc(c.q)}</div>
+<div class="alac"><b>Answer:</b> ${esc(c.A)}<br><b>Legal Basis:</b> ${esc(c.lb)}<br><b>Application:</b> ${esc(c.ap)}<br><b>Conclusion:</b> ${esc(c.cn)}</div>
+</div></div></div>`}
+function render(){const q=document.getElementById('q').value.toLowerCase(),t=document.getElementById('topic').value;let h='',n=0;
+order.forEach(i=>{const c=DATA[i];const b=(c.n+' '+c.c+' '+c.a+' '+c.t+' '+c.d+' '+c.i+' '+c.r+' '+c.q+' '+c.lb).toLowerCase();
+if(q&&!b.includes(q))return;if(t&&c.t!==t)return;h+=card(c);n++;});
+grid.innerHTML=h||'<p style="padding:40px;color:#777">No cards match your filter.</p>';document.getElementById('cnt').textContent=n;}
+function shuffleCards(){for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];}render();}
+function flipAll(){const cs=document.querySelectorAll('.flashcard');const any=[...cs].some(c=>!c.classList.contains('flipped'));cs.forEach(c=>c.classList.toggle('flipped',any));}
+document.getElementById('q').addEventListener('input',render);document.getElementById('topic').addEventListener('change',render);init();
+</script></body></html>
